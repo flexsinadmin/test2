@@ -1,7 +1,7 @@
 name: Deploy React to AWS EC2
 
 
-# Triggers the workflow automatically on a push to the main branch. (Mandatory)
+# Triggers the workflow automatically on a push to the main branch. (Mandatory) 
 on:
   push:
     branches:

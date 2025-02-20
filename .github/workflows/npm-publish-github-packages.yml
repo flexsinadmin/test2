@@ -37,7 +37,7 @@ jobs:
         target: "/var/myproject/my-app/"
 
 #Runs a remote SSH command to restart the server.
-    - name: Restart PM2
+    - name: Remove Old Code
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.EC2_HOST }}
@@ -46,6 +46,16 @@ jobs:
         script: |
           cd /var/myproject/my-app
           rm -rf node_modules build package-lock.json
+
+#Runs a remote SSH command to restart the server.
+    - name: Restart PM2
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USER }}
+        key: ${{ secrets.EC2_SSH_KEY }}
+        script: |
+          cd /var/myproject/my-app
           /home/ubuntu/.nvm/versions/node/v20.18.3/bin/pm2 restart Frontend || /home/ubuntu/.nvm/versions/node/v20.18.3/bin/pm2 start server.js --name Frontend
         
 

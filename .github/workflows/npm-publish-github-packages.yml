@@ -45,6 +45,7 @@ jobs:
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
           cd /var/myproject/my-app
+          rm -rf node_modules build package-lock.json
           /home/ubuntu/.nvm/versions/node/v20.18.3/bin/pm2 restart Frontend || /home/ubuntu/.nvm/versions/node/v20.18.3/bin/pm2 start server.js --name Frontend
         
 

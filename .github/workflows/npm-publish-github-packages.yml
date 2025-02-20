@@ -23,7 +23,7 @@ jobs:
         node-version: 20
         cache: 'npm'
 
-    - run: npm install --no-audit --no-fund
+    - run: npm install --no-lockfile
     - run: npm run build  # Build React project
 
 #Securely copy files from GitHub to your EC2 instance.

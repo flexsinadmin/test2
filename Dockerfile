@@ -1,15 +1,24 @@
-# Use Node.js image to build the React app
-FROM node:20 as build
+# Use Node.js as base image
+FROM node:20-alpine
 
+# Set working directory
 WORKDIR /app
-COPY package.json ./
+
+# Copy package.json and install dependencies
+COPY package.json package-lock.json ./
 RUN npm install
-COPY . ./
+
+# Copy the rest of the application
+COPY . .
+
+# Build the React app
 RUN npm run build
 
-# Use Nginx to serve the built React app
-FROM nginx:alpine
-COPY --from=build /app/build /usr/share/nginx/html
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+# Install PM2 globally
+RUN npm install -g pm2
+
+EXPOSE 3009
+
+# Start the app with PM2
+CMD ["pm2-runtime", "start", "server.js"]
 
